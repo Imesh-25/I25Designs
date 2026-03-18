@@ -1,179 +1,906 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Graphic Designer Portfolio</title>
-<meta name="description" content="Professional portfolio of a graphic designer showcasing projects, skills, and contact information.">
-<style>
-  /* Reset & Base */
-  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Arial', sans-serif; }
-  body { scroll-behavior: smooth; background:#f9f9f9; color:#333; transition: background 0.3s, color 0.3s; }
-  a { text-decoration:none; color: inherit; }
-  img { max-width:100%; display:block; }
-
-  /* Navbar */
-  nav { position:fixed; top:0; width:100%; background:#fff; display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; box-shadow:0 2px 8px rgba(0,0,0,0.1); z-index:1000; }
-  nav ul { display:flex; list-style:none; gap:1.5rem; }
-  nav li { cursor:pointer; }
-  .toggle-mode { cursor:pointer; font-weight:bold; }
-
-  /* Sections */
-  section { padding:100px 20px 60px; max-width:1200px; margin:0 auto; }
-  h1,h2,h3 { margin-bottom:1rem; }
-  h1 { font-size:2.5rem; }
-  h2 { font-size:2rem; }
-
-  /* Hero */
-  #home { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; text-align:center; }
-  #home p { font-size:1.2rem; margin-top:0.5rem; color:#555; }
-
-  /* Portfolio Grid */
-  .portfolio-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:20px; }
-  .portfolio-item { position:relative; cursor:pointer; overflow:hidden; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1); transition:transform 0.3s; }
-  .portfolio-item:hover { transform:scale(1.05); }
-  .portfolio-item img { width:100%; height:200px; object-fit:cover; }
-  .portfolio-item .overlay { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); color:#fff; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.3s; }
-  .portfolio-item:hover .overlay { opacity:1; }
-
-  /* Modal */
-  .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); align-items:center; justify-content:center; padding:20px; z-index:2000; }
-  .modal-content { background:#fff; padding:20px; border-radius:8px; max-width:800px; width:100%; max-height:90vh; overflow-y:auto; position:relative; }
-  .modal-close { position:absolute; top:10px; right:15px; cursor:pointer; font-size:1.5rem; font-weight:bold; }
-
-  /* About */
-  #about img { width:200px; border-radius:50%; margin-bottom:1rem; }
-
-  /* Contact */
-  #contact form { display:flex; flex-direction:column; gap:15px; max-width:500px; }
-  #contact input, #contact textarea { padding:10px; border:1px solid #ccc; border-radius:5px; width:100%; }
-  #contact button { padding:10px; background:#333; color:#fff; border:none; border-radius:5px; cursor:pointer; transition:background 0.3s; }
-  #contact button:hover { background:#555; }
-
-  /* Footer */
-  footer { text-align:center; padding:20px; background:#f1f1f1; margin-top:40px; }
-
-  /* Dark Mode */
-  body.dark-mode { background:#1a1a1a; color:#f1f1f1; }
-  body.dark-mode nav { background:#111; box-shadow:0 2px 8px rgba(255,255,255,0.1); }
-  body.dark-mode #contact button { background:#f1f1f1; color:#111; }
-  body.dark-mode #contact button:hover { background:#ccc; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional graphic designer portfolio showcasing creative work in branding, UI/UX, and visual design.">
+    <meta name="keywords" content="graphic design, portfolio, branding, UI/UX, visual design, creative">
+    <meta name="author" content="Alex Morgan">
+    <meta property="og:title" content="Alex Morgan | Graphic Designer">
+    <meta property="og:description" content="Creative designer crafting visual experiences that inspire and engage.">
+    <meta property="og:type" content="website">
+    <title>Alex Morgan | Graphic Designer</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        primary: '#1a1a1a',
+                        secondary: '#666666',
+                        accent: '#3b82f6',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'scale-in': 'scaleIn 0.3s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0.9)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            scroll-behavior: smooth;
+        }
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: rgba(156, 163, 175, 0.5);
+            border-radius: 4px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: rgba(75, 85, 99, 0.5);
+        }
+        .fade-enter {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .fade-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 300ms, transform 300ms;
+        }
+        .fade-exit {
+            opacity: 1;
+        }
+        .fade-exit-active {
+            opacity: 0;
+            transition: opacity 300ms;
+        }
+    </style>
 </head>
-<body>
+<body class="font-sans antialiased transition-colors duration-300">
+    <div id="root"></div>
 
-<nav>
-  <div class="logo">Graphic Designer</div>
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#portfolio">Portfolio</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <div class="toggle-mode">🌙</div>
-</nav>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
 
-<!-- Home -->
-<section id="home">
-  <h1>Imesh Rathnayaka</h1>
-  <p>Creative Graphic Designer | UI/UX Enthusiast</p>
-</section>
+        // Sample Data
+        const projectsData = [
+            {
+                id: 1,
+                title: "Lumina Brand Identity",
+                category: "Branding",
+                description: "Complete brand identity system for a sustainable lighting company. Included logo design, color palette, typography guidelines, and comprehensive brand book.",
+                role: "Lead Designer",
+                tools: ["Adobe Illustrator", "Figma", "After Effects"],
+                year: "2024",
+                image: "https://images.unsplash.com/photo-1634942537034-2531766767d1?w=800&q=80",
+                gallery: [
+                    "https://images.unsplash.com/photo-1634942537034-2531766767d1?w=800&q=80",
+                    "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
+                    "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80"
+                ]
+            },
+            {
+                id: 2,
+                title: "Nexus Finance App",
+                category: "UI/UX",
+                description: "Mobile banking application redesign focusing on user experience and accessibility. Features intuitive navigation and modern interface design.",
+                role: "UI/UX Designer",
+                tools: ["Figma", "Principle", "Maze"],
+                year: "2024",
+                image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80",
+                gallery: [
+                    "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80",
+                    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+                    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
+                ]
+            },
+            {
+                id: 3,
+                title: "Artisan Coffee Packaging",
+                category: "Graphic Design",
+                description: "Premium packaging design for specialty coffee brand. Emphasized craftsmanship and origin stories through thoughtful visual storytelling.",
+                role: "Packaging Designer",
+                tools: ["Adobe Illustrator", "Photoshop", "Cinema 4D"],
+                year: "2023",
+                image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=800&q=80",
+                gallery: [
+                    "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=800&q=80",
+                    "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&q=80",
+                    "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80"
+                ]
+            },
+            {
+                id: 4,
+                title: "Tech Summit 2024",
+                category: "Graphic Design",
+                description: "Visual identity and collateral for annual technology conference. Included posters, digital assets, stage design, and attendee materials.",
+                role: "Art Director",
+                tools: ["Adobe Creative Suite", "Blender"],
+                year: "2024",
+                image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80",
+                gallery: [
+                    "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80",
+                    "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&q=80",
+                    "https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=800&q=80"
+                ]
+            },
+            {
+                id: 5,
+                title: "EcoLife E-commerce",
+                category: "UI/UX",
+                description: "Sustainable lifestyle e-commerce platform with focus on eco-friendly products. Designed seamless shopping experience with sustainability metrics.",
+                role: "Product Designer",
+                tools: ["Figma", "Webflow", "Hotjar"],
+                year: "2023",
+                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+                gallery: [
+                    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+                    "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
+                    "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=80"
+                ]
+            },
+            {
+                id: 6,
+                title: "Harmony Music Festival",
+                category: "Branding",
+                description: "Brand identity for outdoor music festival celebrating diversity and unity. Vibrant color system reflecting energy and inclusivity.",
+                role: "Brand Designer",
+                tools: ["Illustrator", "Photoshop", "After Effects"],
+                year: "2023",
+                image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80",
+                gallery: [
+                    "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80",
+                    "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=800&q=80",
+                    "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800&q=80"
+                ]
+            }
+        ];
 
-<!-- Portfolio -->
-<section id="portfolio">
-  <h2>Portfolio</h2>
-  <div class="portfolio-grid">
-    <div class="portfolio-item" onclick="openModal(0)">
-      <img src="https://via.placeholder.com/400x300.png?text=Project+1" alt="Project 1">
-      <div class="overlay">Project 1</div>
-    </div>
-    <div class="portfolio-item" onclick="openModal(1)">
-      <img src="https://via.placeholder.com/400x300.png?text=Project+2" alt="Project 2">
-      <div class="overlay">Project 2</div>
-    </div>
-    <div class="portfolio-item" onclick="openModal(2)">
-      <img src="https://via.placeholder.com/400x300.png?text=Project+3" alt="Project 3">
-      <div class="overlay">Project 3</div>
-    </div>
-    <div class="portfolio-item" onclick="openModal(3)">
-      <img src="https://via.placeholder.com/400x300.png?text=Project+4" alt="Project 4">
-      <div class="overlay">Project 4</div>
-    </div>
-    <div class="portfolio-item" onclick="openModal(4)">
-      <img src="https://via.placeholder.com/400x300.png?text=Project+5" alt="Project 5">
-      <div class="overlay">Project 5</div>
-    </div>
-    <div class="portfolio-item" onclick="openModal(5)">
-      <img src="https://via.placeholder.com/400x300.png?text=Project+6" alt="Project 6">
-      <div class="overlay">Project 6</div>
-    </div>
-  </div>
-</section>
+        const skillsData = [
+            { name: "Brand Identity", level: 95 },
+            { name: "UI/UX Design", level: 90 },
+            { name: "Typography", level: 85 },
+            { name: "Motion Graphics", level: 80 },
+            { name: "Illustration", level: 75 },
+            { name: "3D Design", level: 70 }
+        ];
 
-<!-- Modal for Project Details -->
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <span class="modal-close" onclick="closeModal()">&times;</span>
-    <h2 id="modal-title">Project Title</h2>
-    <p id="modal-desc">Project description goes here.</p>
-    <p><strong>Role:</strong> Designer</p>
-    <p><strong>Tools:</strong> Photoshop, Illustrator</p>
-    <img id="modal-img" src="" alt="Project Image">
-  </div>
-</div>
+        const experienceData = [
+            {
+                year: "2022 - Present",
+                role: "Senior Graphic Designer",
+                company: "Creative Studio NYC",
+                description: "Leading brand identity projects and mentoring junior designers."
+            },
+            {
+                year: "2019 - 2022",
+                role: "UI/UX Designer",
+                company: "Tech Innovations Inc",
+                description: "Designed user interfaces for mobile and web applications."
+            },
+            {
+                year: "2017 - 2019",
+                role: "Junior Designer",
+                company: "Digital Agency Co",
+                description: "Created visual assets for various digital marketing campaigns."
+            }
+        ];
 
-<!-- About -->
-<section id="about">
-  <h2>About Me</h2>
-  <img src="https://via.placeholder.com/200.png?text=Profile" alt="Profile Picture">
-  <p>Hi! I'm Imesh, a passionate graphic designer with skills in UI/UX, branding, and creative design. I love crafting beautiful, functional designs for digital and print.</p>
-</section>
+        // Components
+        const ThemeToggle = ({ darkMode, toggleDarkMode }) => (
+            <button
+                onClick={toggleDarkMode}
+                className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300"
+                aria-label="Toggle dark mode"
+            >
+                {darkMode ? (
+                    <svg className="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                ) : (
+                    <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                )}
+            </button>
+        );
 
-<!-- Contact -->
-<section id="contact">
-  <h2>Contact</h2>
-  <form>
-    <input type="text" placeholder="Your Name" required>
-    <input type="email" placeholder="Your Email" required>
-    <textarea placeholder="Your Message" rows="5" required></textarea>
-    <button type="submit">Send Message</button>
-  </form>
-  <p>Follow me on: <a href="#">Behance</a> | <a href="#">Instagram</a> | <a href="#">LinkedIn</a></p>
-</section>
+        const Navigation = ({ currentPage, setCurrentPage, darkMode, toggleDarkMode }) => {
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+            const [scrolled, setScrolled] = useState(false);
 
-<footer>
-  &copy; 2026 Imesh Rathnayaka. All rights reserved.
-</footer>
+            useEffect(() => {
+                const handleScroll = () => {
+                    setScrolled(window.scrollY > 50);
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
 
-<script>
-  // Dark Mode Toggle
-  const toggle = document.querySelector('.toggle-mode');
-  toggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    toggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-  });
+            const navLinks = [
+                { name: 'Home', page: 'home' },
+                { name: 'Portfolio', page: 'portfolio' },
+                { name: 'About', page: 'about' },
+                { name: 'Contact', page: 'contact' }
+            ];
 
-  // Portfolio Modal
-  const projects = [
-    {title:'Project 1', desc:'Description for project 1', img:'https://via.placeholder.com/600x400.png?text=Project+1'},
-    {title:'Project 2', desc:'Description for project 2', img:'https://via.placeholder.com/600x400.png?text=Project+2'},
-    {title:'Project 3', desc:'Description for project 3', img:'https://via.placeholder.com/600x400.png?text=Project+3'},
-    {title:'Project 4', desc:'Description for project 4', img:'https://via.placeholder.com/600x400.png?text=Project+4'},
-    {title:'Project 5', desc:'Description for project 5', img:'https://via.placeholder.com/600x400.png?text=Project+5'},
-    {title:'Project 6', desc:'Description for project 6', img:'https://via.placeholder.com/600x400.png?text=Project+6'},
-  ];
+            return (
+                <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 dark:bg-gray-900/90 glass-effect shadow-lg' : 'bg-transparent'}`}>
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex justify-between items-center h-16">
+                            <div 
+                                className="text-xl font-bold cursor-pointer font-display tracking-tight"
+                                onClick={() => setCurrentPage('home')}
+                            >
+                                <span className="text-gray-900 dark:text-white">Alex</span>
+                                <span className="text-blue-600 dark:text-blue-400">Morgan</span>
+                            </div>
 
-  function openModal(index){
-    document.getElementById('modal-title').textContent = projects[index].title;
-    document.getElementById('modal-desc').textContent = projects[index].desc;
-    document.getElementById('modal-img').src = projects[index].img;
-    document.getElementById('modal').style.display = 'flex';
-  }
+                            {/* Desktop Navigation */}
+                            <div className="hidden md:flex items-center space-x-8">
+                                {navLinks.map((link) => (
+                                    <button
+                                        key={link.page}
+                                        onClick={() => setCurrentPage(link.page)}
+                                        className={`text-sm font-medium transition-colors duration-300 ${currentPage === link.page ? 'text-blue-600 dark:text-blue-400' : 'text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'}`}
+                                    >
+                                        {link.name}
+                                    </button>
+                                ))}
+                                <ThemeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+                            </div>
 
-  function closeModal(){
-    document.getElementById('modal').style.display = 'none';
-  }
-</script>
+                            {/* Mobile Menu Button */}
+                            <div className="md:hidden flex items-center space-x-4">
+                                <ThemeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+                                <button
+                                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                    className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                                >
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        {isMenuOpen ? (
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                        ) : (
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                                        )}
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
 
+                        {/* Mobile Menu */}
+                        {isMenuOpen && (
+                            <div className="md:hidden bg-white dark:bg-gray-900 border-t dark:border-gray-800 animate-fade-in">
+                                {navLinks.map((link) => (
+                                    <button
+                                        key={link.page}
+                                        onClick={() => {
+                                            setCurrentPage(link.page);
+                                            setIsMenuOpen(false);
+                                        }}
+                                        className={`block w-full text-left px-4 py-3 text-sm font-medium transition-colors duration-300 ${currentPage === link.page ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'}`}
+                                    >
+                                        {link.name}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </nav>
+            );
+        };
+
+        const Hero = ({ setCurrentPage }) => (
+            <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 pt-16">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-slide-up">
+                    <p className="text-blue-600 dark:text-blue-400 font-medium mb-4 tracking-widest uppercase text-sm">Portfolio 2024</p>
+                    <h1 className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6 font-display leading-tight">
+                        Crafting Visual<br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Experiences</span>
+                    </h1>
+                    <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto font-light">
+                        Graphic Designer & Art Director specializing in brand identity, digital design, and creative direction.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button
+                            onClick={() => setCurrentPage('portfolio')}
+                            className="px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-full font-medium hover:scale-105 transition-transform duration-300 shadow-lg"
+                        >
+                            View Portfolio
+                        </button>
+                        <button
+                            onClick={() => setCurrentPage('contact')}
+                            className="px-8 py-4 border-2 border-gray-900 dark:border-white text-gray-900 dark:text-white rounded-full font-medium hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-gray-900 transition-all duration-300"
+                        >
+                            Get in Touch
+                        </button>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const FeaturedProjects = ({ setCurrentPage, setSelectedProject }) => {
+            const featured = projectsData.slice(0, 3);
+            
+            return (
+                <section className="py-20 bg-white dark:bg-gray-900">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex justify-between items-end mb-12">
+                            <div>
+                                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white font-display mb-2">Featured Work</h2>
+                                <p className="text-gray-600 dark:text-gray-400">Selected projects from recent years</p>
+                            </div>
+                            <button
+                                onClick={() => setCurrentPage('portfolio')}
+                                className="hidden md:flex items-center text-blue-600 dark:text-blue-400 font-medium hover:gap-2 transition-all duration-300"
+                            >
+                                View All <span className="ml-2">→</span>
+                            </button>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {featured.map((project, index) => (
+                                <div
+                                    key={project.id}
+                                    className="project-card group cursor-pointer"
+                                    onClick={() => {
+                                        setSelectedProject(project);
+                                        setCurrentPage('project');
+                                    }}
+                                    style={{ animationDelay: `${index * 100}ms` }}
+                                >
+                                    <div className="relative overflow-hidden rounded-2xl aspect-[4/3] mb-4 bg-gray-100 dark:bg-gray-800">
+                                        <img
+                                            src={project.image}
+                                            alt={project.title}
+                                            className="w-full h-full object-cover transition-transform duration-500"
+                                            loading="lazy"
+                                        />
+                                        <div className="project-overlay absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300 flex items-center justify-center">
+                                            <span className="text-white font-medium px-6 py-3 border-2 border-white rounded-full hover:bg-white hover:text-black transition-colors duration-300">
+                                                View Project
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <span className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wider">{project.category}</span>
+                                        <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">{project.title}</h3>
+                                        <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2">{project.description}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="mt-12 text-center md:hidden">
+                            <button
+                                onClick={() => setCurrentPage('portfolio')}
+                                className="px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-full font-medium"
+                            >
+                                View All Projects
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const Portfolio = ({ setCurrentPage, setSelectedProject }) => {
+            const [filter, setFilter] = useState('All');
+            const categories = ['All', ...new Set(projectsData.map(p => p.category))];
+            
+            const filteredProjects = filter === 'All' 
+                ? projectsData 
+                : projectsData.filter(p => p.category === filter);
+
+            return (
+                <section className="min-h-screen pt-24 pb-20 bg-gray-50 dark:bg-gray-900">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="text-center mb-12 animate-fade-in">
+                            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white font-display mb-4">Portfolio</h1>
+                            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                                A collection of projects spanning brand identity, digital design, and visual communication.
+                            </p>
+                        </div>
+
+                        {/* Filter Buttons */}
+                        <div className="flex flex-wrap justify-center gap-3 mb-12">
+                            {categories.map((category) => (
+                                <button
+                                    key={category}
+                                    onClick={() => setFilter(category)}
+                                    className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${filter === category ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}`}
+                                >
+                                    {category}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Projects Grid */}
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {filteredProjects.map((project, index) => (
+                                <div
+                                    key={project.id}
+                                    className="project-card group cursor-pointer animate-fade-in"
+                                    onClick={() => {
+                                        setSelectedProject(project);
+                                        setCurrentPage('project');
+                                    }}
+                                    style={{ animationDelay: `${index * 50}ms` }}
+                                >
+                                    <div className="relative overflow-hidden rounded-2xl aspect-[4/3] mb-4 bg-gray-200 dark:bg-gray-800">
+                                        <img
+                                            src={project.image}
+                                            alt={project.title}
+                                            className="w-full h-full object-cover transition-transform duration-500"
+                                            loading="lazy"
+                                        />
+                                        <div className="project-overlay absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-300 flex items-center justify-center">
+                                            <span className="text-white font-medium px-6 py-3 border-2 border-white rounded-full hover:bg-white hover:text-black transition-colors duration-300">
+                                                View Details
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wider">{project.category}</span>
+                                            <span className="text-xs text-gray-500 dark:text-gray-500">{project.year}</span>
+                                        </div>
+                                        <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">{project.title}</h3>
+                                        <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2">{project.description}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const ProjectDetail = ({ project, setCurrentPage }) => {
+            const [currentImage, setCurrentImage] = useState(0);
+
+            if (!project) return null;
+
+            return (
+                <section className="min-h-screen pt-24 pb-20 bg-white dark:bg-gray-900 animate-fade-in">
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                        {/* Back Button */}
+                        <button
+                            onClick={() => setCurrentPage('portfolio')}
+                            className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mb-8 transition-colors duration-300 group"
+                        >
+                            <svg className="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
+                            Back to Portfolio
+                        </button>
+
+                        {/* Project Header */}
+                        <div className="mb-12">
+                            <span className="text-blue-600 dark:text-blue-400 font-medium text-sm uppercase tracking-wider">{project.category}</span>
+                            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white font-display mt-2 mb-4">{project.title}</h1>
+                            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl">{project.description}</p>
+                        </div>
+
+                        {/* Project Meta */}
+                        <div className="grid md:grid-cols-3 gap-8 mb-12 p-6 bg-gray-50 dark:bg-gray-800 rounded-2xl">
+                            <div>
+                                <h4 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-2">Role</h4>
+                                <p className="text-gray-600 dark:text-gray-400">{project.role}</p>
+                            </div>
+                            <div>
+                                <h4 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-2">Tools</h4>
+                                <p className="text-gray-600 dark:text-gray-400">{project.tools.join(', ')}</p>
+                            </div>
+                            <div>
+                                <h4 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-2">Year</h4>
+                                <p className="text-gray-600 dark:text-gray-400">{project.year}</p>
+                            </div>
+                        </div>
+
+                        {/* Image Gallery */}
+                        <div className="space-y-8">
+                            <div className="relative aspect-video rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-800">
+                                <img
+                                    src={project.gallery[currentImage]}
+                                    alt={`${project.title} - Image ${currentImage + 1}`}
+                                    className="w-full h-full object-cover animate-scale-in"
+                                />
+                            </div>
+                            
+                            {/* Thumbnail Navigation */}
+                            <div className="flex gap-4 justify-center">
+                                {project.gallery.map((img, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => setCurrentImage(index)}
+                                        className={`relative w-24 h-16 rounded-lg overflow-hidden transition-all duration-300 ${currentImage === index ? 'ring-2 ring-blue-600 dark:ring-blue-400 scale-105' : 'opacity-60 hover:opacity-100'}`}
+                                    >
+                                        <img src={img} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Next Project Navigation */}
+                        <div className="mt-20 pt-12 border-t border-gray-200 dark:border-gray-800 flex justify-between items-center">
+                            <span className="text-gray-500 dark:text-gray-500 text-sm">Project Navigation</span>
+                            <button
+                                onClick={() => setCurrentPage('portfolio')}
+                                className="text-blue-600 dark:text-blue-400 font-medium hover:underline"
+                            >
+                                View All Projects →
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const About = () => (
+            <section className="min-h-screen pt-24 pb-20 bg-white dark:bg-gray-900">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {/* Bio Section */}
+                    <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
+                        <div className="animate-slide-up">
+                            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white font-display mb-6">About Me</h1>
+                            <div className="space-y-4 text-gray-600 dark:text-gray-400 leading-relaxed">
+                                <p>
+                                    Hello! I'm Alex Morgan, a passionate graphic designer with over 7 years of experience creating compelling visual narratives for brands worldwide. My journey in design began with a fascination for how visual elements can communicate complex ideas simply and beautifully.
+                                </p>
+                                <p>
+                                    I specialize in brand identity, UI/UX design, and creative direction. My approach combines strategic thinking with aesthetic sensibility, ensuring every project not only looks stunning but also achieves its business objectives.
+                                </p>
+                                <p>
+                                    When I'm not designing, you'll find me exploring art galleries, experimenting with photography, or seeking inspiration in nature. I believe great design comes from curiosity and continuous learning.
+                                </p>
+                            </div>
+                            
+                            {/* Stats */}
+                            <div className="grid grid-cols-3 gap-6 mt-8">
+                                <div>
+                                    <div className="text-3xl font-bold text-gray-900 dark:text-white">7+</div>
+                                    <div className="text-sm text-gray-600 dark:text-gray-400">Years Experience</div>
+                                </div>
+                                <div>
+                                    <div className="text-3xl font-bold text-gray-900 dark:text-white">150+</div>
+                                    <div className="text-sm text-gray-600 dark:text-gray-400">Projects Completed</div>
+                                </div>
+                                <div>
+                                    <div className="text-3xl font-bold text-gray-900 dark:text-white">50+</div>
+                                    <div className="text-sm text-gray-600 dark:text-gray-400">Happy Clients</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="relative">
+                            <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-gray-200 dark:bg-gray-800">
+                                <img
+                                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80"
+                                    alt="Alex Morgan - Designer"
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-blue-600/10 dark:bg-blue-400/10 rounded-2xl -z-10"></div>
+                            <div className="absolute -top-6 -right-6 w-48 h-48 bg-purple-600/10 dark:bg-purple-400/10 rounded-2xl -z-10"></div>
+                        </div>
+                    </div>
+
+                    {/* Skills Section */}
+                    <div className="mb-20">
+                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white font-display mb-8">Skills & Expertise</h2>
+                        <div className="grid md:grid-cols-2 gap-6">
+                            {skillsData.map((skill, index) => (
+                                <div key={skill.name} className="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
+                                    <div className="flex justify-between mb-2">
+                                        <span className="font-medium text-gray-900 dark:text-white">{skill.name}</span>
+                                        <span className="text-gray-600 dark:text-gray-400">{skill.level}%</span>
+                                    </div>
+                                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                        <div
+                                            className="bg-blue-600 dark:bg-blue-400 h-2 rounded-full transition-all duration-1000"
+                                            style={{ width: `${skill.level}%`, transitionDelay: `${index * 100}ms` }}
+                                        ></div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Experience Timeline */}
+                    <div>
+                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white font-display mb-8">Experience</h2>
+                        <div className="space-y-8">
+                            {experienceData.map((exp, index) => (
+                                <div key={index} className="relative pl-8 border-l-2 border-gray-200 dark:border-gray-700 last:border-0">
+                                    <div className="absolute -left-[9px] top-0 w-4 h-4 bg-blue-600 dark:bg-blue-400 rounded-full"></div>
+                                    <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
+                                        <span className="text-sm text-blue-600 dark:text-blue-400 font-medium">{exp.year}</span>
+                                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mt-1">{exp.role}</h3>
+                                        <p className="text-gray-600 dark:text-gray-400 font-medium mb-2">{exp.company}</p>
+                                        <p className="text-gray-600 dark:text-gray-400 text-sm">{exp.description}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Contact = () => {
+            const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+            const [submitted, setSubmitted] = useState(false);
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                setSubmitted(true);
+                setTimeout(() => {
+                    setSubmitted(false);
+                    setFormData({ name: '', email: '', message: '' });
+                }, 3000);
+            };
+
+            return (
+                <section className="min-h-screen pt-24 pb-20 bg-gray-50 dark:bg-gray-900">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="grid lg:grid-cols-2 gap-12">
+                            {/* Contact Info */}
+                            <div className="animate-slide-up">
+                                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white font-display mb-6">Let's Work Together</h1>
+                                <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg">
+                                    Have a project in mind? I'd love to hear about it. Send me a message and let's create something amazing together.
+                                </p>
+
+                                <div className="space-y-6">
+                                    <div className="flex items-start space-x-4">
+                                        <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 className="font-semibold text-gray-900 dark:text-white">Email</h3>
+                                            <p className="text-gray-600 dark:text-gray-400">hello@alexmorgan.design</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-start space-x-4">
+                                        <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 className="font-semibold text-gray-900 dark:text-white">Location</h3>
+                                            <p className="text-gray-600 dark:text-gray-400">New York City, NY</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Social Links */}
+                                <div className="mt-12">
+                                    <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Follow Me</h3>
+                                    <div className="flex space-x-4">
+                                        {['Behance', 'Instagram', 'LinkedIn', 'Dribbble'].map((social) => (
+                                            <a
+                                                key={social}
+                                                href="#"
+                                                className="w-10 h-10 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 transition-all duration-300 shadow-sm"
+                                            >
+                                                <span className="text-xs font-bold">{social[0]}</span>
+                                            </a>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Contact Form */}
+                            <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg animate-fade-in">
+                                {submitted ? (
+                                    <div className="text-center py-12">
+                                        <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                                            <svg className="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                            </svg>
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Message Sent!</h3>
+                                        <p className="text-gray-600 dark:text-gray-400">Thank you for reaching out. I'll get back to you soon.</p>
+                                    </div>
+                                ) : (
+                                    <form onSubmit={handleSubmit} className="space-y-6">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Name</label>
+                                            <input
+                                                type="text"
+                                                required
+                                                value={formData.name}
+                                                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                                                className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300"
+                                                placeholder="Your name"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                                            <input
+                                                type="email"
+                                                required
+                                                value={formData.email}
+                                                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                                className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300"
+                                                placeholder="your@email.com"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Message</label>
+                                            <textarea
+                                                required
+                                                rows={5}
+                                                value={formData.message}
+                                                onChange={(e) => setFormData({...formData, message: e.target.value})}
+                                                className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300 resize-none"
+                                                placeholder="Tell me about your project..."
+                                            ></textarea>
+                                        </div>
+                                        <button
+                                            type="submit"
+                                            className="w-full py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg font-medium hover:scale-[1.02] transition-transform duration-300 shadow-lg"
+                                        >
+                                            Send Message
+                                        </button>
+                                    </form>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const Footer = ({ setCurrentPage }) => (
+            <footer className="bg-gray-900 dark:bg-black text-white py-12">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="grid md:grid-cols-4 gap-8 mb-8">
+                        <div className="col-span-2">
+                            <h3 className="text-2xl font-bold font-display mb-4">Alex Morgan</h3>
+                            <p className="text-gray-400 max-w-md">
+                                Creating meaningful visual experiences that connect brands with their audiences through thoughtful design and strategic thinking.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 className="font-semibold mb-4">Quick Links</h4>
+                            <ul className="space-y-2 text-gray-400">
+                                {['Home', 'Portfolio', 'About', 'Contact'].map((link) => (
+                                    <li key={link}>
+                                        <button
+                                            onClick={() => setCurrentPage(link.toLowerCase())}
+                                            className="hover:text-white transition-colors duration-300"
+                                        >
+                                            {link}
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className="font-semibold mb-4">Connect</h4>
+                            <ul className="space-y-2 text-gray-400">
+                                <li><a href="#" className="hover:text-white transition-colors duration-300">Behance</a></li>
+                                <li><a href="#" className="hover:text-white transition-colors duration-300">Instagram</a></li>
+                                <li><a href="#" className="hover:text-white transition-colors duration-300">LinkedIn</a></li>
+                                <li><a href="#" className="hover:text-white transition-colors duration-300">Dribbble</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                        <p className="text-gray-500 text-sm">© 2024 Alex Morgan. All rights reserved.</p>
+                        <p className="text-gray-600 text-sm mt-2 md:mt-0">Designed with passion in NYC</p>
+                    </div>
+                </div>
+            </footer>
+        );
+
+        const App = () => {
+            const [currentPage, setCurrentPage] = useState('home');
+            const [selectedProject, setSelectedProject] = useState(null);
+            const [darkMode, setDarkMode] = useState(false);
+
+            useEffect(() => {
+                if (darkMode) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            }, [darkMode]);
+
+            useEffect(() => {
+                window.scrollTo(0, 0);
+            }, [currentPage]);
+
+            const toggleDarkMode = () => setDarkMode(!darkMode);
+
+            const renderPage = () => {
+                switch(currentPage) {
+                    case 'home':
+                        return (
+                            <>
+                                <Hero setCurrentPage={setCurrentPage} />
+                                <FeaturedProjects setCurrentPage={setCurrentPage} setSelectedProject={setSelectedProject} />
+                            </>
+                        );
+                    case 'portfolio':
+                        return <Portfolio setCurrentPage={setCurrentPage} setSelectedProject={setSelectedProject} />;
+                    case 'project':
+                        return <ProjectDetail project={selectedProject} setCurrentPage={setCurrentPage} />;
+                    case 'about':
+                        return <About />;
+                    case 'contact':
+                        return <Contact />;
+                    default:
+                        return <Hero setCurrentPage={setCurrentPage} />;
+                }
+            };
+
+            return (
+                <div className={`min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300 ${darkMode ? 'dark' : ''}`}>
+                    <Navigation 
+                        currentPage={currentPage} 
+                        setCurrentPage={setCurrentPage} 
+                        darkMode={darkMode} 
+                        toggleDarkMode={toggleDarkMode} 
+                    />
+                    <main className="custom-scrollbar">
+                        {renderPage()}
+                    </main>
+                    <Footer setCurrentPage={setCurrentPage} />
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
